@@ -39,14 +39,14 @@ class CustomerControllerTest {
 
     CustomerServiceImpl customerServiceImpl;
 
+    @Captor
+    ArgumentCaptor<UUID> uuidArgumentCaptor;
+
     @BeforeEach
     void setUp(){
 
         customerServiceImpl = new CustomerServiceImpl();
     }
-
-    @Captor
-    ArgumentCaptor<UUID> uuidArgumentCaptor;
 
     @Test
     void deleteCustomer() throws Exception {
