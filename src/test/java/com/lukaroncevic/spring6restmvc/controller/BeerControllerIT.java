@@ -31,11 +31,31 @@ class BeerControllerIT {
     BeerMapper beerMapper;
 
     @Test
+    void deleteNotFound(){
+        assertThrows(NotFoundException.class, () -> {
+                beerController.deleteById(UUID.randomUUID());
+        });
+    }
+
+    @Test
+    void deleteBeer() {
+
+        Beer beer = beerRepository.findAll().get(0);
+
+        ResponseEntity responseEntity = beerController.deleteById(beer.getId());
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+
+        assertThat(beerRepository.findById(beer.getId()).isEmpty());
+    }
+
+    @Test
     void updateNotFound(){
         assertThrows(NotFoundException.class, () ->
                 beerController.updateById(UUID.randomUUID(), BeerDTO.builder().build()));
     }
 
+    @Rollback
+    @Transactional
     @Test
     void updateBeerById(){
 
