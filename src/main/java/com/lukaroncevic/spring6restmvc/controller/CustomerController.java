@@ -3,6 +3,7 @@ package com.lukaroncevic.spring6restmvc.controller;
 import com.lukaroncevic.spring6restmvc.model.CustomerDTO;
 import com.lukaroncevic.spring6restmvc.services.CustomerService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 public class CustomerController {
 

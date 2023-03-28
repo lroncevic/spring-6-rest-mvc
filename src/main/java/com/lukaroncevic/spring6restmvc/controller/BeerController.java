@@ -38,7 +38,7 @@ public class BeerController {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(BEER_PATH_ID)

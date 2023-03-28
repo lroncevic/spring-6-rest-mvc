@@ -20,7 +20,7 @@ class BootstrapDataTest {
     CustomerRepository customerRepository;
 
     @Autowired
-    BeerCsvService beerCsvService
+    BeerCsvService beerCsvService;
 
     BootstrapData bootstrapData;
 

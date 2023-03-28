@@ -10,7 +10,6 @@ import com.lukaroncevic.spring6restmvc.services.BeerCsvService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
@@ -20,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -39,7 +39,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     private void loadCsvData() throws FileNotFoundException {
-        if (beerRepository.count() < 10) {
+        if (beerRepository.count() < 10){
             File file = ResourceUtils.getFile("classpath:csvdata/beers.csv");
 
             List<BeerCSVRecord> recs = beerCsvService.convertCSV(file);
@@ -112,13 +112,17 @@ public class BootstrapData implements CommandLineRunner {
 
         if (customerRepository.count() == 0) {
             Customer customer1 = Customer.builder()
+                    .id(UUID.randomUUID())
                     .name("Luka Rončević")
+                    .version(1)
                     .createdDate(LocalDateTime.now())
                     .updatedDate(LocalDateTime.now())
                     .build();
 
             Customer customer2 = Customer.builder()
+                    .id(UUID.randomUUID())
                     .name("Laura Kovačić")
+                    .version(1)
                     .createdDate(LocalDateTime.now())
                     .updatedDate(LocalDateTime.now())
                     .build();
