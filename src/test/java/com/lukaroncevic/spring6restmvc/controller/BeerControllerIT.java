@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lukaroncevic.spring6restmvc.entities.Beer;
 import com.lukaroncevic.spring6restmvc.mappers.BeerMapper;
 import com.lukaroncevic.spring6restmvc.model.BeerDTO;
+import com.lukaroncevic.spring6restmvc.model.BeerStyle;
 import com.lukaroncevic.spring6restmvc.repositories.BeerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,14 @@ class BeerControllerIT {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+
+    @Test
+    void listBeersByStyle() throws Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                        .queryParam("beerStyle", BeerStyle.IPA.name()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(547)));
     }
 
     @Test
@@ -170,7 +179,7 @@ class BeerControllerIT {
     @Test
     void listBeers() {
 
-        List<BeerDTO> dtos = beerController.listBeers(null);
+        List<BeerDTO> dtos = beerController.listBeers(null, null);
 
         assertThat(dtos.size()).isEqualTo(2410);
     }
@@ -180,7 +189,7 @@ class BeerControllerIT {
     void emptyList() {
 
         beerRepository.deleteAll();
-        List<BeerDTO> dtos = beerController.listBeers(null);
+        List<BeerDTO> dtos = beerController.listBeers(null, null);
 
         assertThat(dtos.size()).isEqualTo(0);
     }
