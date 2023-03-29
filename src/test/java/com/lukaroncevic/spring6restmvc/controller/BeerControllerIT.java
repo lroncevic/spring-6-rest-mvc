@@ -28,6 +28,7 @@ import static com.lukaroncevic.spring6restmvc.controller.BeerController.BEER_PAT
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -56,6 +57,14 @@ class BeerControllerIT {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+
+    @Test
+    void listBeersByName() throws Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                .queryParam("beerName", "IPA"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(336)));
     }
 
     @Test
@@ -161,7 +170,7 @@ class BeerControllerIT {
     @Test
     void listBeers() {
 
-        List<BeerDTO> dtos = beerController.listBeers();
+        List<BeerDTO> dtos = beerController.listBeers(null);
 
         assertThat(dtos.size()).isEqualTo(2410);
     }
@@ -171,7 +180,7 @@ class BeerControllerIT {
     void emptyList() {
 
         beerRepository.deleteAll();
-        List<BeerDTO> dtos = beerController.listBeers();
+        List<BeerDTO> dtos = beerController.listBeers(null);
 
         assertThat(dtos.size()).isEqualTo(0);
     }
