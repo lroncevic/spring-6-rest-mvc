@@ -1,6 +1,7 @@
 package com.lukaroncevic.spring6restmvc.repositories;
 
 import com.lukaroncevic.spring6restmvc.entities.Beer;
+import com.lukaroncevic.spring6restmvc.entities.BeerOrder;
 import com.lukaroncevic.spring6restmvc.entities.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,10 +33,13 @@ class BeerOrderRepositoryTest {
 
     @Test
     void beerOrder() {
-        System.out.println(beerOrderRepository.count());
-        System.out.println(customerRepository.count());
-        System.out.println(beerRepository.count());
-        System.out.println(testCustomer.getName());
-        System.out.println(testBeer.getBeerName());
+        BeerOrder beerOrder = BeerOrder.builder()
+                .customerRef("Test Order")
+                .customer(testCustomer)
+                .build();
+
+        BeerOrder savedBeerOrder = beerOrderRepository.saveAndFlush(beerOrder);
+
+        System.out.println(savedBeerOrder.getCustomerRef());
     }
 }
