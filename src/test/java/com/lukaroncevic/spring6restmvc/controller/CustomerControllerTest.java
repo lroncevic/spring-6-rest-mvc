@@ -154,7 +154,8 @@ class CustomerControllerTest {
 
         given(customerService.getCustomerById(any(UUID.class))).willReturn(Optional.empty());
 
-        mockMvc.perform(get(CustomerController.CUSTOMER_PATH_ID, UUID.randomUUID()))
+        mockMvc.perform(get(CustomerController.CUSTOMER_PATH_ID, UUID.randomUUID())
+                        .with(httpBasic(USERNAME, PASSWORD)))
                 .andExpect(status().isNotFound());
     }
 
